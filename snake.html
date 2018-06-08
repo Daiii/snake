@@ -74,9 +74,11 @@
 				//移动方向
 				this.direct = null;
 				//初始蛇身
-				this.body = new Array([3,2,'red',null],
-						     [2,2,'blue',null],
-						     [1,2,'blue',null]);
+				this.body=new Array(
+                [3,2,'red',null],//蛇头
+                [2,2,'blue',null],
+                [1,2,'blue',null]
+            );
 				
 				// 生成蛇身
 				this.show=function(){
@@ -89,9 +91,9 @@
 							this.body[i][3].style.backgroundColor = this.body[i][2];
 							map._map.appendChild(this.body[i][3]);
 						}
+						this.body[i][3].style.left=this.body[i][0]*this.width+'px';
+						this.body[i][3].style.top=this.body[i][1]*this.height+'px';
 					}
-					this.body[i][3].style.left = this.body[i][0] * this.width + 'px';
-					this.body[i][3].style.top = this.body[i][1] * this.height + 'px';
 				}
 			
 				// 移动
@@ -101,7 +103,6 @@
 						this.body[i][0] = this.body[i-1][0];
 						this.body[i][1] = this.body[i-1][1];
 					}
-
 					// 判断方向
 					switch(this.direct){
 						case 'right':
@@ -117,52 +118,50 @@
 							this.body[0][1] = this.body[0][1] + 1;
 							break;
 					}
-
 					this.condition();
 					this.show();
 				}
-
+				
 				// 定时器
 				this.speed = function(){
 					timer = setInterval('snake.move()',initSpeed);
 				}
-
+				
 				// 条件处理
 				this.condition = function(){
 					// 吃食物
 					if(this.body[0][0] == food.x && this.body[0][1] == food.y){
-						greade++;
+						grade++;
 						this.body[[this.body.length]] = [0,0,'blue',null];
-						map._map.removeChild(food._food);
+						map._map.removeChild(food._food)
 						food.show();
 					}
-
 					// 撞墙
-					if(this.body[0][0] < 0 || 
-					   this.body[0][0]> = map.width / this.width || 
-					   this.body[0][1]<0 || this.body[0][1] >= map.height / this.height){
+					if(this.body[0][0]<0 || 
+					this.body[0][0] >= map.width / this.width || 
+					this.body[0][1] < 0 || 
+					this.body[0][1] >= map.height / this.height){
 						alert('game over');
 						clearInterval(timer);
 						return;
 					}
-
-					// 吃自己
-					for(var i = 1; i < this.body.length; i++){
+					// 撞自己
+					for(var i = 1;i < this.body.length; i++){
 						if(this.body[0][0] == this.body[i][0] && this.body[0][1] == this.body[i][1]){
 							alert('game over');
 							clearInterval(timer);
 							return;
 						}
 					}
-
 					// 提速
 					if(grade / num == flag){
 						clearInterval(timer);
 						flag++;
-						nowSpeed = initSpeed / flag;
+						nowSpeed=initSpeed / flag;
 						timer=setInterval('snake.move()',nowSpeed);
 					}
 					document.title='贪吃蛇 积分：' + grade + ' 速度等级：' + initSpeed / nowSpeed;
+
 				}
 			}
 			
@@ -174,20 +173,20 @@
 				}
 				
 				// 控制方向键
-				keyCodes = window.event ? window.event.keyCode : event.keyCode;
-				if(keyCodes == 87 || keyCodes == 38){
-					// 规避反响移动
-					snake.direct = snake.body[0][0] = =snake.body[1][0]?snake.direct:'up';
+				keyCodes = window.event ? window.event.keyCode : event.keyCode;	
+				if(keyCodes==87 || keyCodes ==38){
+					// 规避反向移动
+					snake.direct = snake.body[0][0] == snake.body[1][0] ? snake.direct : 'up';
 				}else if(keyCodes == 83 || keyCodes == 40){
-					snake.direct = snake.body[0][0] == snake.body[1][0]?snake.direct:'down';
+					snake.direct = snake.body[0][0] == snake.body[1][0] ? snake.direct : 'down';
 				}else if(keyCodes == 68 || keyCodes == 39){
-					snake.direct = snake.body[0][1] == snake.body[1][1]?snake.direct:'right';
+					snake.direct = snake.body[0][1] == snake.body[1][1] ? snake.direct : 'right';
 				}else if(keyCodes == 65 || keyCodes == 37){
-					snake.direct = snake.body[0][1] == snake.body[1][1]?snake.direct:'left';
+					snake.direct = snake.body[0][1] == snake.body[1][1] ? snake.direct : 'left';
 				}
 			}
 			
-			// 记载游戏
+			// 加载游戏
 			window.onload=function(){
 				map = new Map();
 				map.show();
