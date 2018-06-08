@@ -152,22 +152,24 @@
             snake.direct='right';
             snake.speed();
         }
-        //控制方向，W S D A分别代表 上下右左
-        switch(window.event?window.event.keyCode:event.keyCode){//浏览器兼容处理
-            case 87 :
-                snake.direct=snake.body[0][0]==snake.body[1][0]?snake.direct:'up';//避免反向移动，触发死亡bug
-                break;
-            case 83 :
-                snake.direct=snake.body[0][0]==snake.body[1][0]?snake.direct:'down';
-                break;
-            case 68 :
-                snake.direct=snake.body[0][1]==snake.body[1][1]?snake.direct:'right';
-                break;
-            case 65 :
-                snake.direct=snake.body[0][1]==snake.body[1][1]?snake.direct:'left';
-                break;
-        }
-    }
+		
+		// W S D A控制方向(支持方向键)
+		keyCodes = window.event?window.event.keyCode:event.keyCode;
+		
+		if(keyCodes==87 || keyCodes ==38){
+			//避免反向移动，触发死亡bug
+			snake.direct=snake.body[0][0]==snake.body[1][0]?snake.direct:'up';
+		}
+		else if(keyCodes==83||keyCodes==40){
+			snake.direct=snake.body[0][0]==snake.body[1][0]?snake.direct:'down';
+		}else if(keyCodes==68||keyCodes==39){
+			snake.direct=snake.body[0][1]==snake.body[1][1]?snake.direct:'right';
+		}else if(keyCodes==65||keyCodes==37){
+			snake.direct=snake.body[0][1]==snake.body[1][1]?snake.direct:'left';
+		}
+		
+
+		}
     //自动加载游戏
     window.onload=function(){
         map=new Map();
