@@ -27,7 +27,7 @@
 				this.width = 1280;
 				this.height = 720;
 				this.position = 'absolute';
-				this.color = '#EEEEEE';
+				this.color = 'black';
 				this._map = null;
 				
 				// 生成地图
@@ -46,7 +46,7 @@
 				this.width = 20;
 				this.height = 20;
 				this.position='absolute';
-				this.color = '#00FF00';
+				this.color = 'yellow';
 				this.x = 0;
 				this.y = 0;
 				this._food;
@@ -74,11 +74,9 @@
 				//移动方向
 				this.direct = null;
 				//初始蛇身
-				this.body=new Array(
-                [3,2,'red',null],//蛇头
-                [2,2,'blue',null],
-                [1,2,'blue',null]
-            );
+				this.body=new Array([3,2,'red',null],
+				[2,2,'white',null],
+				[1,2,'white',null]);
 				
 				// 生成蛇身
 				this.show=function(){
